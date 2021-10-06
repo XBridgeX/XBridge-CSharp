@@ -1,0 +1,4 @@
+-mcsm open <SeverName>
+-mcsm stop <SeverName>
+-mcsm restart <SeverName>
+-mcsm kill <SeverName>
