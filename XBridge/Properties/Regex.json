@@ -1,0 +1,113 @@
+// 这些是xb_native功能的正则版本
+// v1.2.0.0
+// 由XBridge官方团队维护
+// 作者: lition
+// xb正则表达式文档:https://gitee.com/DreamLition/XBridge/blob/master/Regex/API.md
+// (C)XBridge 2021
+[
+	{
+		"Regex": "^查服$",
+		"permission": 0,
+		"out": [
+			{
+				"type": "runcmdall",
+				"text": "list"
+			}
+		]
+	},
+	{
+		"Regex": "^解绑xboxid $",  //你需要艾特一个人,如果他绑定了xboxid,则会解除他的绑定
+		"permission": 1,
+		"out": [
+			{
+				"type": "group",
+				"text": "尝试解绑%atqqid%"
+			},
+			{
+				"type": "runcmdall",
+				"text": "whitelist remove \"%atxboxid%\""
+			},
+			{
+				"type":"xb_cmd", //调用xb原生指令移除白名单
+				"text":"wl remove %atqqid%"
+			}
+			//这里千万不要调用xb_wl_remove,那个默认移除发信者的白名单
+		]
+	},
+	{
+		"Regex": "^加白名 $",
+		"permission": 1,
+		"out": [
+			{
+				"type": "runcmdall",
+				"text": "whitelist add \"%atxboxid%\""
+			},
+			{
+				"type": "group",
+				"text": "[CQ:at,qq=%qqid%] %atxboxid%已添加到所有服务器!"
+			}
+		]
+	},
+	{
+		"Regex": "^申请白名单\\s([A-Za-z0-9]{4,16})$",
+		"permission": 0,
+		"out": [
+			{
+				"type": "xb_cmd",
+				"text": "wl add %qqid% $1"
+			},
+			{
+				"type": "group",
+				"text": "[CQ:at,qq=%qqid%] 你的白名单($1)已绑定,请等待审核"
+			}
+		]
+	},
+	{
+		"Regex": "^解绑白名单$",
+		"permission": 0,
+		"out": [
+			{
+				"type": "runcmdall",
+				"text": "whitelist remove \"%xboxid%\""
+			},
+			{
+				"type": "xb_wl_remove",  //这里就不用xb指令了,xb_wl_remove还不用写命令,又能偷点懒
+				"text": ""
+			},
+			{
+				"type": "group",
+				"text": "[CQ:at,qq=%qqid%] 你的白名单已解绑!"
+			}
+		]
+	},
+	{
+		"Regex": "^chat\\s(.+?)$",
+		"permission": 0,
+		"out": [
+			{
+				"type": "textall",  //群服互通组件,会发送信息到所有服务器
+				"text": "[群聊]<%qqnick%> $1"
+			}
+		]
+	},
+	{
+		"Regex": "^查询白名单 $",   //这个也需要你at一个人
+		"permission": 0,
+		"out": [
+			{
+				"type": "group",
+				"text": "[CQ:at,qq=%qqid%] id为：%atxboxid%\n如果显示id为at说明没绑定"
+			}
+		]
+	},
+	{
+		"Regex": "^咕咕咕$",
+		"permission": 0,
+		"out": [
+			{
+				"type": "group",
+				"text": "今天也是咕咕咕的一天呢"  //皮这一下很开心
+			}
+		]
+	}
+]
